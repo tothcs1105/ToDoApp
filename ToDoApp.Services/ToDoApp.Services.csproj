@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoApp.DataAccess\ToDoApp.DataAccess.csproj" />
+    <ProjectReference Include="..\ToDoApp.Services.Interfaces\ToDoApp.Services.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>
