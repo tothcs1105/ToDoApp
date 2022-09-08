@@ -6,8 +6,12 @@ namespace ToDoApp.DataAccess.FileSystem
     internal class ToDoTaskFileSystemRepository : IToDoTaskRepository
     {
         private FileInfo _destinationFile;
+        private string _separator;
 
-        public ToDoTaskFileSystemRepository(FileInfo destinationFile) => _destinationFile = destinationFile;
+        public ToDoTaskFileSystemRepository(FileInfo destinationFile) { 
+            _destinationFile = destinationFile ?? throw new ArgumentNullException(nameof(destinationFile));
+            CreateFileIfNotExists();
+        }
 
         public Task<ToDoTask> AddTaskAsync(ToDoTask task)
         {
@@ -32,6 +36,24 @@ namespace ToDoApp.DataAccess.FileSystem
         public Task<ToDoTask> UpdateTaskAsync(ToDoTask task)
         {
             throw new NotImplementedException();
+        }
+
+        private void CreateFileIfNotExists()
+        {
+            if (!_destinationFile.Exists)
+            {
+                _destinationFile.Create();
+            }
+        }
+
+        private IEnumerable<string> ReadFile()
+        {
+            if (!_destinationFile.Exists)
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            return System.IO.File.ReadAllLines(_destinationFile.FullName);
         }
     }
 }

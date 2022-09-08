@@ -5,9 +5,9 @@ namespace ToDoApp.DataAccess.FileSystem
 {
     public static class RegisterRepositories
     {
-        public static IServiceCollection AddRepositoryRegistrations(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddRepositoryRegistrations(this IServiceCollection serviceCollection, FileInfo filePath)
         {
-            serviceCollection.AddScoped<IToDoTaskRepository, ToDoTaskFileSystemRepository>();
+            serviceCollection.AddScoped<IToDoTaskRepository>(provider => new ToDoTaskFileSystemRepository(filePath));
 
             return serviceCollection;
         }
