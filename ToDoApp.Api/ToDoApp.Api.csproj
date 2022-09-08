@@ -14,4 +14,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoApp.DataAccess.FileSystem\ToDoApp.DataAccess.FileSystem.csproj" />
+    <ProjectReference Include="..\ToDoApp.Services\ToDoApp.Services.csproj" />
+  </ItemGroup>
+
 </Project>

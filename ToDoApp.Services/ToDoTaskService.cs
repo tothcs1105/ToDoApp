@@ -6,24 +6,36 @@ namespace ToDoApp.Services
 {
     internal class ToDoTaskService : IToDoTaskService
     {
+        private IToDoTaskRepository _taskRepository;
+
         public ToDoTaskService(IToDoTaskRepository toDoTaskRepository)
         {
-
+            _taskRepository = toDoTaskRepository ?? throw new ArgumentNullException(nameof(toDoTaskRepository));
         }
 
-        public Task<ToDoTask> AddTaskAsync(ToDoTask task)
+        public async Task<ToDoTask> AddTaskAsync(ToDoTask task)
         {
-            throw new NotImplementedException();
+            return await _taskRepository.AddTaskAsync(task);
         }
 
-        public Task DeleteTaskAsync(int taskId)
+        public async Task DeleteTaskAsync(int taskId)
         {
-            throw new NotImplementedException();
+            await _taskRepository.DeleteTaskAsync(taskId);
         }
 
-        public Task<ToDoTask> UpdateTaskAsync(ToDoTask task)
+        public async Task<ToDoTask> GetToDoTaskAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _taskRepository.GetToDoTaskAsync(id);
+        }
+
+        public async Task<IEnumerable<ToDoTask>> GetToDoTasksAsync()
+        {
+            return await _taskRepository.GetToDoTasksAsync();
+        }
+
+        public async Task<ToDoTask> UpdateTaskAsync(ToDoTask task)
+        {
+            return await _taskRepository.UpdateTaskAsync(task);
         }
     }
 }

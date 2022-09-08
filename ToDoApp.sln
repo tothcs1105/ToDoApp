@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoApp.Api", "ToDoApp.Api\ToDoApp.Api.csproj", "{012D30BD-5528-46E9-BA17-0724854B59F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Api", "ToDoApp.Api\ToDoApp.Api.csproj", "{012D30BD-5528-46E9-BA17-0724854B59F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoApp.Services", "ToDoApp.Services\ToDoApp.Services.csproj", "{0AA33540-C153-4D92-B618-5207C3BA225F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Services", "ToDoApp.Services\ToDoApp.Services.csproj", "{0AA33540-C153-4D92-B618-5207C3BA225F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoApp.DataAccess", "ToDoApp.DataAccess\ToDoApp.DataAccess.csproj", "{79EB23D3-7B38-4773-96EB-96FBCB43C5B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.DataAccess", "ToDoApp.DataAccess\ToDoApp.DataAccess.csproj", "{79EB23D3-7B38-4773-96EB-96FBCB43C5B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoApp.Services.Interfaces", "ToDoApp.Services.Interfaces\ToDoApp.Services.Interfaces.csproj", "{3AF2E5FD-B186-47C9-85A2-4CAEA0ABAD11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Services.Interfaces", "ToDoApp.Services.Interfaces\ToDoApp.Services.Interfaces.csproj", "{3AF2E5FD-B186-47C9-85A2-4CAEA0ABAD11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoApp.DTOs", "ToDoApp.DTOs\ToDoApp.DTOs.csproj", "{46F166C4-E1EC-4CBC-BECA-439D9EF80C1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.DTOs", "ToDoApp.DTOs\ToDoApp.DTOs.csproj", "{46F166C4-E1EC-4CBC-BECA-439D9EF80C1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoApp.DataAccess.FileSystem", "ToDoApp.DataAccess.FileSystem\ToDoApp.DataAccess.FileSystem.csproj", "{504531CB-16CA-4CA4-9523-EA6FC0484BB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{46F166C4-E1EC-4CBC-BECA-439D9EF80C1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46F166C4-E1EC-4CBC-BECA-439D9EF80C1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46F166C4-E1EC-4CBC-BECA-439D9EF80C1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{504531CB-16CA-4CA4-9523-EA6FC0484BB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{504531CB-16CA-4CA4-9523-EA6FC0484BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{504531CB-16CA-4CA4-9523-EA6FC0484BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{504531CB-16CA-4CA4-9523-EA6FC0484BB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
