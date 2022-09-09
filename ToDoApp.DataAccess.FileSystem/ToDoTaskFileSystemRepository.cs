@@ -11,7 +11,7 @@ namespace ToDoApp.DataAccess.FileSystem
 
         public ToDoTaskFileSystemRepository(ISerializer serializer, FileInfo destinationFile) : base(destinationFile, serializer) { 
             _destinationFile = destinationFile ?? throw new ArgumentNullException(nameof(destinationFile));
-            CreateFileIfNotExists(Enumerable.Empty<ToDoTask>());
+            InitializeFile(Enumerable.Empty<ToDoTask>());
         }
 
         public Task<ToDoTask> AddTaskAsync(ToDoTask task)

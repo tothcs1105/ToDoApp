@@ -14,13 +14,20 @@ namespace ToDoApp.DataAccess.FileSystem
             _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
-        protected void CreateFileIfNotExists(IEnumerable<T> initialValue = null)
+        protected void InitializeFile(IEnumerable<T> initialValue = null)
         {
-            if (!_destinationFile.Exists)
+            if (_destinationFile.Exists)
+            {
+                if(initialValue != null && _serializer.Deserialize<IEnumerable<T>>(File.ReadAllText(_destinationFile.FullName)) == null)
+                {
+                    WriteFile(initialValue);
+                }
+            }
+            else
             {
                 _destinationFile.Create();
 
-                if (initialValue != null)
+                if(initialValue != null)
                 {
                     WriteFile(initialValue);
                 }

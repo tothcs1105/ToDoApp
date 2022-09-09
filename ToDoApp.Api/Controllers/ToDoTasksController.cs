@@ -24,7 +24,7 @@ namespace ToDoApp.Api.Controllers
         {
             var toDoList = await _taskService.GetToDoTasksAsync();
 
-            var mappedToDoList = _mapper.Map<Api.DTOs.ToDoTask>(toDoList);
+            var mappedToDoList = _mapper.Map<IEnumerable<Api.DTOs.ToDoTask>>(toDoList);
 
             return Ok(mappedToDoList);
         }
@@ -39,5 +39,7 @@ namespace ToDoApp.Api.Controllers
 
             return Ok(mappedToDoTask);
         }
+
+
     }
 }
