@@ -5,24 +5,34 @@ using ToDoApp.DTOs;
 
 namespace ToDoApp.DataAccess.FileSystem
 {
-    internal class ToDoTaskFileSystemRepository : IToDoTaskRepository
+    internal class ToDoTaskFileSystemRepository : FileSystemRepositoryBase<ToDoTask, int>, IToDoTaskRepository
     {
-        private FileInfo _destinationFile;
-        private ISerializer _serializer;
+        private Func<ToDoTask, int> KeySelector = toDoTask => toDoTask.Id;
 
-        public ToDoTaskFileSystemRepository(ISerializer serializer, FileInfo destinationFile) { 
+        public ToDoTaskFileSystemRepository(ISerializer serializer, FileInfo destinationFile) : base(destinationFile, serializer) { 
             _destinationFile = destinationFile ?? throw new ArgumentNullException(nameof(destinationFile));
-            CreateFileIfNotExists();
+            CreateFileIfNotExists(Enumerable.Empty<ToDoTask>());
         }
 
         public Task<ToDoTask> AddTaskAsync(ToDoTask task)
         {
-            throw new NotImplementedException();
+            var toDoList = ReadFile(KeySelector);
+
+            if (!toDoList.ContainsKey(task.Id))
+            {
+                toDoList.Add(task.Id, task);
+
+                WriteFile(toDoList.Values.AsEnumerable());
+
+                return Task.FromResult(task);
+            }
+
+            throw new ItemAlreadyExistsException($"Task with id: {task.Id} already exists!");
         }
 
         public Task DeleteTaskAsync(int id)
         {
-            var toDoList = ReadFile();
+            var toDoList = ReadFile(KeySelector);
 
             if (toDoList.ContainsKey(id))
             {
@@ -33,51 +43,40 @@ namespace ToDoApp.DataAccess.FileSystem
                 return Task.CompletedTask;
             }
 
-            throw new TaskNotFoundException($"Can't delete task with id {id}. Because it was not found in the DB.");
+            throw new ItemNotFoundException($"Can't delete task with id {id}, because it was not found in the DB.");
         }
 
         public Task<ToDoTask> GetToDoTaskAsync(int id)
         {
-            var toDoList = ReadFile();
+            var toDoList = ReadFile(KeySelector);
 
             if(toDoList.TryGetValue(id, out var toDoTask))
             {
                 return Task.FromResult(toDoTask);
             }
 
-            throw new TaskNotFoundException($"Task with the id {id} was not found in the DB.");
+            throw new ItemNotFoundException($"Task with the id {id} was not found in the DB.");
         }
 
         public Task<IEnumerable<ToDoTask>> GetToDoTasksAsync()
         {
-            return Task.FromResult(ReadFile().Values.AsEnumerable());
+            return Task.FromResult(ReadFile(KeySelector).Values.AsEnumerable());
         }
 
         public Task<ToDoTask> UpdateTaskAsync(ToDoTask task)
         {
-            throw new NotImplementedException();
-        }
+            var toDoList = ReadFile(KeySelector);
 
-        private void CreateFileIfNotExists()
-        {
-            if (!_destinationFile.Exists)
+            if(toDoList.TryGetValue(task.Id, out var oldTask))
             {
-                _destinationFile.Create();
+                toDoList.Remove(task.Id);
+
+                toDoList.Add(task.Id, task);
+
+                WriteFile(toDoList.Values.AsEnumerable());
             }
-        }
 
-        private IDictionary<int, ToDoTask> ReadFile()
-        {
-            var toDoList = _serializer.Deserialize<IEnumerable<ToDoTask>>(System.IO.File.ReadAllText(_destinationFile.FullName));
-
-            return toDoList.ToDictionary(task => task.Id, task => task);
-        }
-
-        private void WriteFile(IEnumerable<ToDoTask> toDoList)
-        {
-            var serializedToDoList = _serializer.Serialize(toDoList);
-
-            File.WriteAllText(_destinationFile.FullName, serializedToDoList);
+            throw new ItemNotFoundException($"Task with the id {task.Id} was not found int the DB.");
         }
     }
 }
