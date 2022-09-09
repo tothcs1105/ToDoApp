@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ToDoApp.Common;
 using ToDoApp.DataAccess.Interfaces;
 
 namespace ToDoApp.DataAccess.FileSystem
@@ -7,7 +8,7 @@ namespace ToDoApp.DataAccess.FileSystem
     {
         public static IServiceCollection AddRepositoryRegistrations(this IServiceCollection serviceCollection, FileInfo filePath)
         {
-            serviceCollection.AddScoped<IToDoTaskRepository>(provider => new ToDoTaskFileSystemRepository(filePath));
+            serviceCollection.AddScoped<IToDoTaskRepository>(provider => new ToDoTaskFileSystemRepository(provider.GetRequiredService<ISerializer>(), filePath));
 
             return serviceCollection;
         }

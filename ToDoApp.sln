@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.DTOs", "ToDoApp.DTO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoApp.DataAccess.FileSystem", "ToDoApp.DataAccess.FileSystem\ToDoApp.DataAccess.FileSystem.csproj", "{504531CB-16CA-4CA4-9523-EA6FC0484BB4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoApp.Common", "ToDoApp.Common\ToDoApp.Common.csproj", "{CEDBDB76-6C6F-4AF6-9D4C-49EC39033515}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{504531CB-16CA-4CA4-9523-EA6FC0484BB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{504531CB-16CA-4CA4-9523-EA6FC0484BB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{504531CB-16CA-4CA4-9523-EA6FC0484BB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEDBDB76-6C6F-4AF6-9D4C-49EC39033515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEDBDB76-6C6F-4AF6-9D4C-49EC39033515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEDBDB76-6C6F-4AF6-9D4C-49EC39033515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEDBDB76-6C6F-4AF6-9D4C-49EC39033515}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

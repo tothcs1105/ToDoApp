@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ToDoApp.Common\ToDoApp.Common.csproj" />
     <ProjectReference Include="..\ToDoApp.DataAccess\ToDoApp.DataAccess.csproj" />
   </ItemGroup>
 
