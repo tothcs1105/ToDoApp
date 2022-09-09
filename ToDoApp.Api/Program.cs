@@ -18,7 +18,7 @@ builder.Services.AddAutoMapper(c =>
 });
 
 builder.Services.AddToDoAppServiceRegistrations();
-builder.Services.AddRepositoryRegistrations(new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "ToDoApp.txt")));
+builder.Services.AddRepositoryRegistrations(new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "ToDoApp.json")));
 
 var app = builder.Build();
 
