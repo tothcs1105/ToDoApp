@@ -1,4 +1,5 @@
-﻿using ToDoApp.DataAccess.Interfaces;
+﻿using Serilog;
+using ToDoApp.DataAccess.Interfaces;
 using ToDoApp.DTOs;
 using ToDoApp.Services.Interfaces;
 
@@ -7,9 +8,11 @@ namespace ToDoApp.Services
     internal class ToDoTaskService : ServiceBase<ToDoTask>, IToDoTaskService
     {
         private IToDoTaskRepository _taskRepository;
+        private ILogger _logger;
 
-        public ToDoTaskService(IToDoTaskRepository toDoTaskRepository, ValidatorBase<ToDoTask> validator) : base(validator)
+        public ToDoTaskService(ILogger logger, IToDoTaskRepository toDoTaskRepository, ValidatorBase<ToDoTask> validator) : base(validator)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _taskRepository = toDoTaskRepository ?? throw new ArgumentNullException(nameof(toDoTaskRepository));
         }
 
@@ -19,39 +22,57 @@ namespace ToDoApp.Services
 
             task.State = TaskState.Uncompleted;
 
-            return await _taskRepository.AddTaskAsync(task);
+            var result = await _taskRepository.AddTaskAsync(task);
+
+            _logger.Debug("Added new ToDo {@task}", task);
+
+            return result;
         }
 
         public async Task DeleteTaskAsync(int taskId)
         {
             await _taskRepository.DeleteTaskAsync(taskId);
+
+            _logger.Debug("Removed ToDo task", new { TaskId = taskId });
         }
 
         public async Task<ToDoTask> GetToDoTaskAsync(int id)
         {
-            return await _taskRepository.GetToDoTaskAsync(id);
+            var result = await _taskRepository.GetToDoTaskAsync(id);
+
+            _logger.Debug("Get ToDo task", new { TaskId = id });
+
+            return result;
         }
 
         public async Task<IEnumerable<ToDoTask>> GetToDoTasksAsync()
         {
-            return await _taskRepository.GetToDoTasksAsync();
+            var result = await _taskRepository.GetToDoTasksAsync();
+
+            _logger.Debug("Get All ToDo tasks");
+
+            return result;
         }
 
         public async Task<ToDoTask> UpdateTaskAsync(ToDoTask task)
         {
-            var oldTask = await _taskRepository.GetToDoTaskAsync(task.Id);
+            var originalTask = await _taskRepository.GetToDoTaskAsync(task.Id);
 
             if(task.Description != null)
             {
-                oldTask.Description = task.Description;
+                originalTask.Description = task.Description;
             }
 
             if (task.State.HasValue)
             {
-                oldTask.State = task.State;
+                originalTask.State = task.State;
             }
 
-            return await _taskRepository.UpdateTaskAsync(oldTask);
+            var result = await _taskRepository.UpdateTaskAsync(originalTask);
+
+            _logger.Debug("ToDo task updated", new { NewTask = originalTask });
+
+            return result;
         }
     }
 }

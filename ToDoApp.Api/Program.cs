@@ -1,3 +1,4 @@
+using Serilog;
 using System.Text.Json.Serialization;
 using ToDoApp.Api.Mappings;
 using ToDoApp.Common;
@@ -23,6 +24,9 @@ builder.Services.AddAutoMapper(c =>
 builder.Services.AddToDoAppServiceRegistrations();
 builder.Services.AddRepositoryRegistrations(new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "ToDoApp.json")));
 builder.Services.AddScoped<ISerializer, JsonSerializer>();
+
+builder.Host.UseSerilog((hostContext, services, configuration) =>
+    configuration.ReadFrom.Configuration(builder.Configuration));
 
 var app = builder.Build();
 
