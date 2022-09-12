@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ToDoApp.Api.Mappings;
 using ToDoApp.Common;
 using ToDoApp.DataAccess.FileSystem;
@@ -5,10 +6,11 @@ using ToDoApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddControllers().AddJsonOptions(config =>
+{
+    config.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -24,7 +26,6 @@ builder.Services.AddScoped<ISerializer, JsonSerializer>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
