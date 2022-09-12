@@ -1,20 +1,23 @@
 ﻿using ToDoApp.DataAccess.Interfaces;
 using ToDoApp.DTOs;
 using ToDoApp.Services.Interfaces;
+using ToDoApp.Services.Validators;
 
 namespace ToDoApp.Services
 {
-    internal class ToDoTaskService : IToDoTaskService
+    internal class ToDoTaskService : ServiceBase<ToDoTask>, IToDoTaskService
     {
         private IToDoTaskRepository _taskRepository;
 
-        public ToDoTaskService(IToDoTaskRepository toDoTaskRepository)
+        public ToDoTaskService(IToDoTaskRepository toDoTaskRepository, ValidatorBase<ToDoTask> validator) : base(validator)
         {
             _taskRepository = toDoTaskRepository ?? throw new ArgumentNullException(nameof(toDoTaskRepository));
         }
 
         public async Task<ToDoTask> AddTaskAsync(ToDoTask task)
         {
+            _validator.Validate(task);
+
             task.State = TaskState.Uncompleted;
 
             return await _taskRepository.AddTaskAsync(task);
