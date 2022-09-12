@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApp.Api.DTOs;
+using ToDoApp.DTOs;
 using ToDoApp.Services.Interfaces;
 
 namespace ToDoApp.Api.Controllers
@@ -20,7 +21,7 @@ namespace ToDoApp.Api.Controllers
 
         [HttpGet]
 
-        public async Task<ActionResult<IEnumerable<ToDoTask>>> GetTasks()
+        public async Task<ActionResult<IEnumerable<ToDoApp.Api.DTOs.ToDoTask>>> GetTasks()
         {
             var toDoList = await _taskService.GetToDoTasksAsync();
 
@@ -31,7 +32,7 @@ namespace ToDoApp.Api.Controllers
 
         [HttpGet("{taskId:int}")]
 
-        public async Task<ActionResult<IEnumerable<ToDoTask>>> GetTask(int taskId)
+        public async Task<ActionResult<IEnumerable<ToDoApp.Api.DTOs.ToDoTask>>> GetTask(int taskId)
         {
             var toDoTask = await _taskService.GetToDoTaskAsync(taskId);
 
@@ -52,7 +53,7 @@ namespace ToDoApp.Api.Controllers
 
             var createdTask = await _taskService.AddTaskAsync(newTaskServiceModel);
 
-            return Ok(createdTask);  
+            return Ok(_mapper.Map<DTOs.ToDoTask>(createdTask));  
         }
 
 
@@ -62,6 +63,21 @@ namespace ToDoApp.Api.Controllers
             await _taskService.DeleteTaskAsync(taskId);
 
             return Ok();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateTask(UpdateToDoTask toDoTaskChange)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var toUpdateTaskServiceModel = _mapper.Map<ToDoApp.DTOs.ToDoTask>(toDoTaskChange);
+
+            var updatedTask = await _taskService.UpdateTaskAsync(toUpdateTaskServiceModel);
+
+            return Ok(_mapper.Map<DTOs.ToDoTask>(updatedTask));
         }
     }
 }

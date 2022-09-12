@@ -5,10 +5,10 @@ namespace ToDoApp.Api.DTOs
     public class UpdateToDoTask
     {
         [Required]
-        public int TaskId { get; set; }
+        public int Id { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public TaskState State { get; set; }
+        public TaskState? State { get; set; }
     }
 }

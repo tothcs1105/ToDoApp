@@ -20,6 +20,7 @@ namespace ToDoApp.Api.Mappings
         private void ToBusinessDto()
         {
             CreateMap<Api.DTOs.NewToDoTask, ToDoTask>();
+            CreateMap<Api.DTOs.UpdateToDoTask, ToDoTask>();
         }
     }
 }

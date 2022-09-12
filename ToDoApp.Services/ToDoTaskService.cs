@@ -1,7 +1,6 @@
 ﻿using ToDoApp.DataAccess.Interfaces;
 using ToDoApp.DTOs;
 using ToDoApp.Services.Interfaces;
-using ToDoApp.Services.Validators;
 
 namespace ToDoApp.Services
 {
@@ -40,7 +39,19 @@ namespace ToDoApp.Services
 
         public async Task<ToDoTask> UpdateTaskAsync(ToDoTask task)
         {
-            return await _taskRepository.UpdateTaskAsync(task);
+            var oldTask = await _taskRepository.GetToDoTaskAsync(task.Id);
+
+            if(task.Description != null)
+            {
+                oldTask.Description = task.Description;
+            }
+
+            if (task.State.HasValue)
+            {
+                oldTask.State = task.State;
+            }
+
+            return await _taskRepository.UpdateTaskAsync(oldTask);
         }
     }
 }

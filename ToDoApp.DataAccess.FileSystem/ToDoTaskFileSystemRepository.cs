@@ -70,9 +70,11 @@ namespace ToDoApp.DataAccess.FileSystem
                 oldTask.State = task.State;
 
                 WriteFile(toDoList.Values.AsEnumerable());
+
+                return Task.FromResult(oldTask);
             }
 
-            throw new ItemNotFoundException($"Task with the id {task.Id} was not found int the DB.");
+            throw new ItemNotFoundException($"Task with the id {task.Id} was not found in the DB.");
         }
     }
 }
