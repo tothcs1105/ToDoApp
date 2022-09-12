@@ -1,5 +1,5 @@
 ﻿using ToDoApp.Common;
-using ToDoApp.DataAccess.FileSystem.Exceptions;
+using ToDoApp.DataAccess.Exceptions;
 using ToDoApp.DataAccess.Interfaces;
 using ToDoApp.DTOs;
 
@@ -66,9 +66,8 @@ namespace ToDoApp.DataAccess.FileSystem
 
             if(toDoList.TryGetValue(task.Id, out var oldTask))
             {
-                toDoList.Remove(task.Id);
-
-                toDoList.Add(task.Id, task);
+                oldTask.Description = task.Description;
+                oldTask.State = task.State;
 
                 WriteFile(toDoList.Values.AsEnumerable());
             }
