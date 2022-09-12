@@ -29,17 +29,39 @@ namespace ToDoApp.Api.Controllers
             return Ok(mappedToDoList);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{taskId:int}")]
 
-        public async Task<ActionResult<IEnumerable<ToDoTask>>> GetTask(int id)
+        public async Task<ActionResult<IEnumerable<ToDoTask>>> GetTask(int taskId)
         {
-            var toDoTask = await _taskService.GetToDoTaskAsync(id);
+            var toDoTask = await _taskService.GetToDoTaskAsync(taskId);
 
             var mappedToDoTask = _mapper.Map<Api.DTOs.ToDoTask>(toDoTask);
 
             return Ok(mappedToDoTask);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> AddTask([FromBody] NewToDoTask newTask)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var newTaskServiceModel = _mapper.Map<ToDoApp.DTOs.ToDoTask>(newTask);
+
+            var createdTask = await _taskService.AddTaskAsync(newTaskServiceModel);
+
+            return Ok(createdTask);  
+        }
+
+
+        [HttpDelete("{taskId:int}")]
+        public async Task<ActionResult> DeleteTask(int taskId)
+        {
+            await _taskService.DeleteTaskAsync(taskId);
+
+            return Ok();
+        }
     }
 }

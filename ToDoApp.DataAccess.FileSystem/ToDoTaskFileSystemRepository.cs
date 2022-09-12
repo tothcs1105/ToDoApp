@@ -18,16 +18,13 @@ namespace ToDoApp.DataAccess.FileSystem
         {
             var toDoList = ReadFile(KeySelector);
 
-            if (!toDoList.ContainsKey(task.Id))
-            {
-                toDoList.Add(task.Id, task);
+            task.Id = toDoList.Count > 0 ? toDoList.Keys.Max() + 1 : 1;
 
-                WriteFile(toDoList.Values.AsEnumerable());
+            toDoList.Add(task.Id, task);
 
-                return Task.FromResult(task);
-            }
+            WriteFile(toDoList.Values.AsEnumerable());
 
-            throw new ItemAlreadyExistsException($"Task with id: {task.Id} already exists!");
+            return Task.FromResult(task);
         }
 
         public Task DeleteTaskAsync(int id)

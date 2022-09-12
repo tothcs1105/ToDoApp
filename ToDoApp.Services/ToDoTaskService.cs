@@ -15,6 +15,8 @@ namespace ToDoApp.Services
 
         public async Task<ToDoTask> AddTaskAsync(ToDoTask task)
         {
+            task.State = TaskState.Uncompleted;
+
             return await _taskRepository.AddTaskAsync(task);
         }
 
