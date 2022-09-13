@@ -18,6 +18,11 @@ namespace ToDoApp.Services
 
         public async Task<ToDoTask> AddTaskAsync(ToDoTask task)
         {
+            if(task == null)
+            {
+                throw new ArgumentNullException(nameof(task));
+            }
+
             _validator.Validate(task);
 
             task.State = TaskState.Uncompleted;
@@ -56,6 +61,11 @@ namespace ToDoApp.Services
 
         public async Task<ToDoTask> UpdateTaskAsync(ToDoTask task)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException(nameof(task));
+            }
+
             var originalTask = await _taskRepository.GetToDoTaskAsync(task.Id);
 
             if(task.Description != null)
