@@ -35,5 +35,28 @@ namespace ToDoApp.Services.Tests
             //Assert
             await act.Should().ThrowAsync<ArgumentNullException>();
         }
+
+        [Fact]
+        public async void AddTaskAsync_CorrectArgumentProvided_ShouldCallServiceMethods()
+        {
+            //Arrange
+            var toDoTask = new ToDoTask
+            {
+                Title = "TestToDo",
+                Description = "TestDescription"
+            };
+
+            _taskRepositoryMock.Setup(repo => repo.AddTaskAsync(toDoTask)).Returns(Task.FromResult(toDoTask));
+
+            //Act
+            var result = await _sut.AddTaskAsync(toDoTask);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.State.Should().Be(TaskState.Uncompleted);
+            _validatorMock.Verify(validator => validator.Validate(toDoTask));
+            _taskRepositoryMock.Verify(repository => repository.AddTaskAsync(toDoTask));
+            _loggerMock.Verify(logger => logger.Debug(It.IsAny<string>(), toDoTask));
+        }
     }
 }

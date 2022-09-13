@@ -6,7 +6,7 @@ namespace ToDoApp.Services.Interfaces
     {
         public IDictionary<string, string> ModelErrors { get; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        public void Validate(T obj)
+        public virtual void Validate(T obj)
         {
             if(obj == null)
             {
