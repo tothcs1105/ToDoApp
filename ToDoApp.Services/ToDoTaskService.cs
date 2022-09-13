@@ -24,7 +24,7 @@ namespace ToDoApp.Services
 
             var result = await _taskRepository.AddTaskAsync(task);
 
-            _logger.Debug("Added new ToDo {@task}", task);
+            _logger.Debug("Added new ToDo task {@task}", task);
 
             return result;
         }
@@ -33,14 +33,14 @@ namespace ToDoApp.Services
         {
             await _taskRepository.DeleteTaskAsync(taskId);
 
-            _logger.Debug("Removed ToDo task", new { TaskId = taskId });
+            _logger.Debug("Removed ToDo task {@task}", new { TaskId = taskId });
         }
 
         public async Task<ToDoTask> GetToDoTaskAsync(int id)
         {
             var result = await _taskRepository.GetToDoTaskAsync(id);
 
-            _logger.Debug("Get ToDo task", new { TaskId = id });
+            _logger.Debug("Get ToDo task {@task}", result);
 
             return result;
         }
@@ -70,7 +70,7 @@ namespace ToDoApp.Services
 
             var result = await _taskRepository.UpdateTaskAsync(originalTask);
 
-            _logger.Debug("ToDo task updated", new { NewTask = originalTask });
+            _logger.Debug("ToDo task updated {@task}", originalTask);
 
             return result;
         }
